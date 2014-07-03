@@ -1,6 +1,7 @@
 package org.human.gulim.runcatch;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,9 @@ public class MainActivity extends Activity {
 	
 	public void joinRoom (View v)
 	{
+		Intent intent = new Intent (this, JoinRoomActivity.class);
+		
+		startActivity(intent);
 		// 방에 참가하는 Activity 실행
 		finish();
 	}
