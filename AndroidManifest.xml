@@ -26,6 +26,10 @@
             android:name="org.human.gulim.runcatch.SetNickNameActivity"
             android:label="@string/title_activity_set_nick_name" >
         </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.JoinRoomActivity"
+            android:label="@string/title_activity_join_room" >
+        </activity>
     </application>
 
 </manifest>
