@@ -21,10 +21,11 @@ public class MainActivity extends Activity {
 	
 	public void joinRoom (View v)
 	{
-		Intent intent = new Intent (this, JoinRoomActivity.class);
-		
-		startActivity(intent);
 		// 방에 참가하는 Activity 실행
+		Intent intent = new Intent (this, JoinRoomActivity.class);
+		startActivity(intent);
+		
+		// 적절한 동작을 하고 현재 Activity 종료
 		finish();
 	}
 }
