@@ -3,8 +3,8 @@ package org.human.gulim.runcatch.bean;
 import java.util.List;
 import java.util.Map;
 
-import factory.ListFactory;
-import factory.MapFactory;
+import org.human.gulim.runcatch.factory.ListFactory;
+import org.human.gulim.runcatch.factory.MapFactory;
 
 public class Team {
 	private Map<String,User> userMap;

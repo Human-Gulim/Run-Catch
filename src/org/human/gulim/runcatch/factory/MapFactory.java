@@ -1,4 +1,4 @@
-package factory;
+package org.human.gulim.runcatch.factory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
