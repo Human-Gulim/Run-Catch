@@ -23,7 +23,7 @@ public class JoinRoomActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_join_room);
 
-		// �대��꾪솕��NFC媛�爰쇱졇 �덈떎硫� �쒖꽦���좊룄
+		// NFC 주석 확인
 
 		if (!NfcAdapter.getDefaultAdapter(getApplicationContext()).isEnabled())
 		{
