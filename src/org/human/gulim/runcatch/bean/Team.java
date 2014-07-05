@@ -10,8 +10,11 @@ public class Team {
 	private Map<String,User> userMap;
 	private int id_team;
 	
+	
+	
 	public Team(){
 		userMap = MapFactory.getMap(String.class, User.class);
+		this.id_team = -1;
 	}
 	
 	public int getCount(){

@@ -2,18 +2,28 @@ package org.human.gulim.runcatch.bean;
 
 import java.util.Map;
 
+import org.human.gulim.runcatch.factory.MapFactory;
+
 public class RoomInfo {
 	
 	private String id_room;
 	private long time;
-	private Map<String, Team>teams;
+	private Map<Integer, Team>teams;
 	private int mode;//탈출지모드인지 시간 뻐기기 모드인지.
 
-	public Map<String, Team> getTeams() {
+	public RoomInfo(){
+		this.id_room = null;
+		this.time = -1;
+		this.teams = MapFactory.getMap(Integer.class, Team.class);
+		this.mode = -1;
+		
+	}
+	public Map<Integer, Team> getTeams() {
+
 		return teams;
 	}
 
-	public void setTeams(Map<String, Team> teams) {
+	public void setTeams(Map<Integer, Team> teams) {
 		this.teams = teams;
 	}
 
