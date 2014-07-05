@@ -24,6 +24,7 @@ public class JoinRoomActivity extends Activity {
 		setContentView(R.layout.activity_join_room);
 
 		// NFC 주석 확인
+		// 한글 테스트
 
 		if (!NfcAdapter.getDefaultAdapter(getApplicationContext()).isEnabled())
 		{
