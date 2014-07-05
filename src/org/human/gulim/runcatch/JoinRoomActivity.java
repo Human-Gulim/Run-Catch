@@ -23,19 +23,18 @@ public class JoinRoomActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_join_room);
 
-		// NFC 주석 확인
-		// 한글 테스트
+		// 휴대전화의 NFC가 꺼져 있다면, 활성화 유도
 
 		if (!NfcAdapter.getDefaultAdapter(getApplicationContext()).isEnabled())
 		{
-			Toast.makeText(getApplicationContext(), "NFC��Beam ���쒖꽦���쒗궓 �� Back �ㅻ� �뚮윭���깆쑝濡��뚯븘��＜�몄슂", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "NFC와 Beam 을 활성화 시킨 후, Back 키를 눌러서 앱으로 돌아와주세요", Toast.LENGTH_LONG).show();
 			startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
 		}
 
-		// Android Beam 遺�텇
+		// Android Beam 부분
 		nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-		// Shared Preference�먯꽌 Nickname��媛�졇�ㅺ린
+		// Shared Preference에서 Nickname을 가져오기
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		String nickName = pref.getString("nickName", "");
@@ -46,20 +45,20 @@ public class JoinRoomActivity extends Activity {
 				throw new Exception();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				Log.d("Exception", "�щ컮瑜�nickname �곗씠�곌� 議댁옱�섏� �딄굅�� nickname �곗씠�곌� 怨듬갚�낅땲��");
+				Log.d("Exception", "올바른 nickname 데이터가 존재하지 않거나, nickname 데이터가 공백입니다");
 				e.printStackTrace();
 				System.exit(1);
 			}
 		}
 		
-		// Bluetooth ��MAC address瑜�媛�졇�ㅺ린
+		// Bluetooth 의 MAC address를 가져오기
 		
 		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
 		final int REQUEST_ENABLE_BT = 1;
 		
 		if (BTAdapter.isEnabled())
 		{
-			// Discoverable 紐⑤뱶濡�
+			// Discoverable 모드로
 			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
 
@@ -78,7 +77,7 @@ public class JoinRoomActivity extends Activity {
 	
 		String mac = BTAdapter.getAddress();
 		
-		// NFC濡�蹂대궪 �댁슜���앹꽦 - content
+		// NFC로 보낼 내용을 생성 - content
 		String content = nickName + "\n" + mac;
 
 		NdefRecord [] records = new NdefRecord[2];
