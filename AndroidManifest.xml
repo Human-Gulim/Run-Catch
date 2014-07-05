@@ -8,6 +8,14 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -29,6 +37,10 @@
         <activity
             android:name="org.human.gulim.runcatch.JoinRoomActivity"
             android:label="@string/title_activity_join_room" >
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.CommunicationsEnableActivity"
+            android:label="@string/title_activity_communications_enable" >
         </activity>
     </application>
 
