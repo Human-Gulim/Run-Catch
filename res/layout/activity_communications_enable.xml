@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.human.gulim.runcatch.CommunicationsEnableActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <Button
+        android:id="@+id/gpsEnableBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nfcEnableBtn"
+        android:layout_below="@+id/btEnableBtn"
+        android:layout_centerVertical="true"
+        android:onClick="gpsEnable"
+        android:text="GPS 활성화" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="이 게임을 플레이 하려면,\nAndroid Beam(S Beam),\nBluetooth,\nGPS 활성화가 필요합니다.\n아래 버튼을 눌러\n활성화 과정을 진행 해 주세요!"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/nfcEnableBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="nfcEnable"
+        android:text="NFC 활성화" />
+
+    <Button
+        android:id="@+id/contBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="continueGame"
+        android:layout_centerHorizontal="true"
+        android:text="계속 진행하기" />
+
+    <Button
+        android:id="@+id/btEnableBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nfcEnableBtn"
+        android:layout_centerHorizontal="true"
+        android:onClick="btEnable"
+        android:text="Bluetooth 활성화" />
+
+</RelativeLayout>
+
