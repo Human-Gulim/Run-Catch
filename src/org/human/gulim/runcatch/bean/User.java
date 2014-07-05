@@ -1,7 +1,6 @@
 package org.human.gulim.runcatch.bean;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 
 
@@ -72,7 +71,7 @@ public class User {
 			return null;
 		
 		User user = new User();
-		/*
+		
 		Object value = obj.get("id");
 		if(value != null)
 		{
@@ -95,8 +94,28 @@ public class User {
 		value = obj.get("phone");
 		if(value!=null)
 		{
-			value = obj.get
-		}*/
+			user.setPhone(value.toString());
+		}
+		
+		value = obj.get("latitude");
+		if(value!=null)
+		{
+			user.setLatitude((Double)value);
+		}
+		
+		value = obj.get("longitude");
+		if(value!=null)
+		{
+			user.setLongitude((Double)value);
+		}
+		
+		value = obj.get("team");
+		if(value!=null)
+		{
+			user.setTeam((Integer)value);
+		}
+		
+		
 		return user;
 	}
 	

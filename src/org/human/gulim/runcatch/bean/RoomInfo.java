@@ -9,15 +9,15 @@ public class RoomInfo {
 	private String id_room;
 	private long time;
 	private Map<Integer, Team>teams;
-	private int mode;//탈출지모드인지 시간 뻐기기 모드인지.
+	private int mode;
 
 	public RoomInfo(){
 		this.id_room = null;
 		this.time = -1;
 		this.teams = MapFactory.getMap(Integer.class, Team.class);
 		this.mode = -1;
-		
 	}
+	
 	public Map<Integer, Team> getTeams() {
 
 		return teams;
