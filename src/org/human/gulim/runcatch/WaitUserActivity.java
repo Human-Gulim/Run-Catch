@@ -14,11 +14,14 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class WaitUserActivity extends Activity {
 	ArrayList<String> list;
+	ArrayList<String[]> rawList;
+	
 	ArrayAdapter<String> adapter;
 	NfcAdapter mNfcAdapter;
 	IntentFilter[] mNdefExchangeFilters;
@@ -33,6 +36,7 @@ public class WaitUserActivity extends Activity {
 		lView = (ListView) findViewById (R.id.joinList);
 
 		list = new ArrayList<String>();
+		rawList = new ArrayList<String[]>();
 
 		adapter = new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1, list);
@@ -88,6 +92,7 @@ public class WaitUserActivity extends Activity {
 
 					//Log.d("verbose", "decoded text: " + message);
 					String [] lists = message.split("\n");
+					rawList.add(lists);
 					memberAdd(lists[0] + "(" + lists[1] + ")");
 					
 				}
@@ -123,4 +128,15 @@ public class WaitUserActivity extends Activity {
 		adapter.notifyDataSetChanged();
 	}
 
+	public void startGame (View v)
+	{
+		// 서버에 데이터를 보내 방을 만들게 함
+		
+		// 게임 시작 activity로 전환 후 현재 activity 종료
+		
+		Intent intent = new Intent(this, GameActivity.class);
+		startActivity(intent);
+		
+		finish();
+	}
 }

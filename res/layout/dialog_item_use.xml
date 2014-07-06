@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/itemNameLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemImgView"
+        android:layout_alignTop="@+id/itemImgView"
+        android:layout_toRightOf="@+id/itemImgView"
+        android:gravity="center"
+        android:text="아이템 이름"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/itemImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/itemDescLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignLeft="@+id/itemImgView"
+        android:layout_below="@+id/itemNameLbl"
+        android:text="아이템 설명 아이템 설명 아이템 설명 아이템 설명 아이템 설명 아이템 설명 아이템 설명 아이템 설명 아이템 설명 "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

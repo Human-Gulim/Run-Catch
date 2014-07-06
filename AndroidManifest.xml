@@ -55,6 +55,10 @@
             android:name="org.human.gulim.runcatch.WaitUserActivity"
             android:label="@string/title_activity_wait_user" >
         </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>
