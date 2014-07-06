@@ -52,13 +52,13 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 
 	private Object myPosToRequest(User user) {
 		Object result = null;
-
+		//TODO
 		return result;
 	}
 
 	private RoomInfo responseToRoomInfo(Object response) {
 		RoomInfo roomInfo = null;
-
+		//TODO
 		return roomInfo;
 	}
 
@@ -123,9 +123,9 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 	
 	private Object catchInfoToRequest(User user){
 		Object request=null;
+		//TODO
+		
 		return request;
 	}
 	
-
-
 }

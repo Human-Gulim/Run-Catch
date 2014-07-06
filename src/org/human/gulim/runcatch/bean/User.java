@@ -100,21 +100,20 @@ public class User {
 		value = obj.get("latitude");
 		if(value!=null)
 		{
-			user.setLatitude((Double)value);
+			user.setLatitude(Double.parseDouble(value.toString()));
 		}
 		
 		value = obj.get("longitude");
 		if(value!=null)
 		{
-			user.setLongitude((Double)value);
+			user.setLongitude(Double.parseDouble(value.toString()));
 		}
 		
 		value = obj.get("team");
 		if(value!=null)
 		{
-			user.setTeam((Integer)value);
+			user.setTeam(Integer.parseInt(value.toString()));
 		}
-		
 		
 		return user;
 	}

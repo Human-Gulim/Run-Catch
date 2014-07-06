@@ -59,7 +59,7 @@ public class Team {
 		value = obj.get("id_team");
 		if(value!=null)
 		{
-			team.setId_team((Integer)value);
+			team.setId_team(Integer.parseInt(value.toString()));
 		}
 		
 		jsonArray =(JSONArray) obj.get("members");

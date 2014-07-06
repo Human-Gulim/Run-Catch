@@ -2,7 +2,6 @@ package org.human.gulim.runcatch;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -10,7 +9,6 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class JoinRoomActivity extends Activity {
 
