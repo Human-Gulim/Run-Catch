@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
