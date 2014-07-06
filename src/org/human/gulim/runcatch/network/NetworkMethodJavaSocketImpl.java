@@ -10,15 +10,18 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.human.gulim.runcatch.bean.Jsonable;
 import org.human.gulim.runcatch.bean.RoomInfo;
 import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.constants.Constants;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
+import org.json.simple.JSONObject;
+
 
 public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 
 	@Override
-	public RoomInfo updateMyPos(User user) throws NetworkMethodException {
+	public RoomInfo emitEvent(String event, Jsonable data) throws NetworkMethodException {
 		Socket socket = null;
 		ObjectOutputStream oOut = null;
 		ObjectInputStream oIn = null;
@@ -29,7 +32,8 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			oOut = new ObjectOutputStream(new BufferedOutputStream(
 					socket.getOutputStream()));
 
-			request = myPosToRequest(user);
+			request = toRequest(event,data);
+			
 			oOut.writeObject(request);
 			oOut.flush();
 
@@ -50,20 +54,31 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		return result;
 	}
 
-	private Object myPosToRequest(User user) {
-		Object result = null;
-		//TODO
-		return result;
+	@SuppressWarnings("unchecked")
+	private Object toRequest(String event, Jsonable jsonable) {
+		JSONObject obj = new JSONObject();
+		obj.put("event", event);
+		obj.put("data", jsonable);
+		
+		return obj.toJSONString();
 	}
 
 	private RoomInfo responseToRoomInfo(Object response) {
 		RoomInfo roomInfo = null;
-		//TODO
+		JSONObject obj = null;
+		obj = (JSONObject) response;
+		
+		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj.get("data"));
 		return roomInfo;
 	}
 
 	
-	
+	/**
+	 * It frees socket, inputstream, outputstream.
+	 * @param socket to be freed.
+	 * @param in to be freed.
+	 * @param out to be freed.
+	 */
 	private void freeResources(Socket socket, InputStream in, OutputStream out) {
 		if (out != null) {
 			try {
@@ -83,49 +98,6 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			} catch (IOException e) {
 			}
 		}
-	}
-	
-	
-
-	@Override
-	public RoomInfo catchUser(User user) throws NetworkMethodException {
-		Socket socket = null;
-		ObjectOutputStream oOut = null;
-		ObjectInputStream oIn = null;
-		RoomInfo result = null;
-		Object request, response;
-		try {
-			socket = new Socket(Constants.SERVER_IP, Constants.SERVER_PORT);
-			oOut = new ObjectOutputStream(new BufferedOutputStream(
-					socket.getOutputStream()));
-
-			request = catchInfoToRequest(user);
-			oOut.writeObject(request);
-			oOut.flush();
-
-			oIn = new ObjectInputStream(new BufferedInputStream(
-					socket.getInputStream()));
-			response = oIn.readObject();
-			
-			result = responseToRoomInfo(response);
-
-		} catch (UnknownHostException e) {
-			throw new NetworkMethodException(e);
-		} catch (IOException e) {
-			throw new NetworkMethodException(e);
-		} catch (ClassNotFoundException e) {
-			throw new NetworkMethodException(e);
-		} finally {
-			freeResources(socket, oIn, oOut);
-		}
-		return result;
-	}
-	
-	private Object catchInfoToRequest(User user){
-		Object request=null;
-		//TODO
-		
-		return request;
 	}
 	
 }

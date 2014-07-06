@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 
 
-public class User {
+public class User implements Jsonable{
 	
 	private String id_room;
 	private String nickname;
@@ -12,7 +12,7 @@ public class User {
 	private String phone;
 	private double latitude;
 	private double longitude;
-	private int team;
+	private int id_team;
 	
 	public User(){
 		this.id_room = null;
@@ -21,7 +21,7 @@ public class User {
 		this.phone = null;
 		this.latitude = -1;
 		this.longitude = -1;
-		this.team = -1;
+		this.id_team = -1;
 	}
 	
 	public String getId_room() {
@@ -60,12 +60,12 @@ public class User {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public int getTeam() {
-		return team;
-	}
-	public void setTeam(int team) {
-		this.team = team;
-	}
+
+	/**
+	 * JSONObject를 user object로 변환한다.
+	 * @param obj
+	 * @return The user object into which obj(input) is converted.
+	 */
 	public static User getUserFromJson(JSONObject obj){
 		if(obj == null)
 			return null;
@@ -109,13 +109,36 @@ public class User {
 			user.setLongitude(Double.parseDouble(value.toString()));
 		}
 		
-		value = obj.get("team");
+		value = obj.get("id_team");
 		if(value!=null)
 		{
-			user.setTeam(Integer.parseInt(value.toString()));
+			user.setId_team(Integer.parseInt(value.toString()));
 		}
 		
 		return user;
+	}
+
+	public int getId_team() {
+		return id_team;
+	}
+
+	public void setId_team(int id_team) {
+		this.id_team = id_team;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject();
+		obj.put("id_room", id_room);
+		obj.put("nickname", nickname);
+		obj.put("id", id);
+		obj.put("phone", phone);
+		obj.put("latitude", latitude);
+		obj.put("id_team", id_team);
+		
+		return obj;
 	}
 	
 

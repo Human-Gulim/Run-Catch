@@ -1,7 +1,7 @@
 package org.human.gulim.runcatch.bean;
 
 public class Item {
-	private int id;//아이템 이름.
+	private int id;
 	private long time;
 	private double latitude;
 	private double longitude;

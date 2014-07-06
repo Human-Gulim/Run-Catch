@@ -8,34 +8,35 @@ import org.human.gulim.runcatch.factory.MapFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Team {
-	private Map<String,User> userMap;
+
+public class Team implements Jsonable{
+	private Map<String,User> memberMap;
 	private int id_team;
 	
 	
 	
 	public Team(){
-		userMap = MapFactory.getMap(String.class, User.class);
+		memberMap = MapFactory.getMap(String.class, User.class);
 		this.id_team = -1;
 	}
 	
 	public int getCount(){
-		return userMap.size();
+		return memberMap.size();
 	}
 	
 	public void put(String key, User user){
-		userMap.put(key, user);
+		memberMap.put(key, user);
 	}
 	
 	public User get(String key)
 	{
-		return userMap.get(key);
+		return memberMap.get(key);
 	}
 	
 	public List<User> getMembers()
 	{
 		List<User> members = ListFactory.getList(User.class);
-		members.addAll(userMap.values());
+		members.addAll(memberMap.values());
 		return members;
 	}
 	
@@ -46,6 +47,13 @@ public class Team {
 		this.id_team = id_team;
 	}
 	
+	
+	/**
+	 * JSONObject를 Team object로 변환한다.
+	 * @param obj
+	 * @return The team object into which obj(input) is converted.
+	 */
+	 
 	public static Team getTeamFromJson(JSONObject obj){
 		if(obj ==null)
 			return null;
@@ -72,5 +80,21 @@ public class Team {
 		}
 		
 		return team;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject();
+		JSONArray members =  new JSONArray(); 
+		
+		for(User member : memberMap.values())
+		{
+			members.add(member.toJSONObject());
+		}
+		obj.put("id_team", id_team);
+		obj.put("members", members);
+		
+		return obj;
 	}
 }

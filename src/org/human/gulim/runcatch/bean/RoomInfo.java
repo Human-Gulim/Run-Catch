@@ -6,36 +6,37 @@ import org.human.gulim.runcatch.factory.MapFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class RoomInfo {
+public class RoomInfo implements Jsonable{
 	
 	private String id_room;
 	private long time;
-	private Map<Integer, Team>teams;
+	private long time_left;
+	private Map<Integer, Team>teamMap;
 	private int mode;
 
 	public RoomInfo(){
 		this.id_room = null;
 		this.time = -1;
-		this.teams = MapFactory.getMap(Integer.class, Team.class);
+		this.teamMap = MapFactory.getMap(Integer.class, Team.class);
 		this.mode = -1;
 	}
 	
 	public Map<Integer, Team> getTeams() {
 
-		return teams;
+		return teamMap;
 	}
 
-	public void setTeams(Map<Integer, Team> teams) {
-		this.teams = teams;
+	public void setTeams(Map<Integer, Team> teamMap) {
+		this.teamMap = teamMap;
 	}
 	
 	public Team getTeam(Integer id_team)
 	{
-		return teams.get(id_team);
+		return teamMap.get(id_team);
 	}
 	public void putTeam(Integer id_team, Team team)
 	{
-		teams.put(id_team, team);
+		teamMap.put(id_team, team);
 	}
 
 	public String getId_room() {
@@ -62,6 +63,12 @@ public class RoomInfo {
 		this.mode = mode;
 	}
 	
+	
+	/**
+	 * JSONObject를 RoomInfo object로 변환한다.
+	 * @param obj
+	 * @return The team object into which obj(input) is converted.
+	 */
 	public static RoomInfo getRoomInfoFromJson(JSONObject obj)
 	{
 		if(obj==null)
@@ -84,6 +91,12 @@ public class RoomInfo {
 		{
 			roomInfo.setTime(Long.parseLong(value.toString()));
 		}
+		value = obj.get("time_left");
+		if(value!=null)
+		{
+			roomInfo.setTime_left(Long.parseLong(value.toString()));
+		}
+	
 		
 		value = obj.get("mode");
 		if(value!=null)
@@ -106,6 +119,36 @@ public class RoomInfo {
 		}
 		return roomInfo;
 	}
-	
+
+	public long getTime_left() {
+		return time_left;
+	}
+
+	public void setTime_left(long time_left) {
+		this.time_left = time_left;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject obj;
+		JSONArray teams;
+		obj = new JSONObject();
+		teams = new JSONArray();
+		obj.put("id_room",id_room);
+		obj.put("time", time);
+		obj.put("time_left",time_left);
+		obj.put("mode", mode);
+		
+		for(Team team: teamMap.values())
+		{
+			teams.add(team.toJSONObject());
+		}
+		
+		obj.put("teams", teams);
+		return obj;
+	}
+
+
 
 }
