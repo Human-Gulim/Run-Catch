@@ -2,10 +2,13 @@ package org.human.gulim.runcatch;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 
@@ -30,8 +33,10 @@ public class MainActivity extends Activity {
 		// 센서 활성화 여부를 체크
 		
 		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		boolean locEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		
-		if ( !BTAdapter.isEnabled() || !NfcAdapter.getDefaultAdapter(getApplicationContext()).isEnabled())
+		if ( !BTAdapter.isEnabled() || !NfcAdapter.getDefaultAdapter(getApplicationContext()).isEnabled() || !locEnabled)
 		{
 			Intent intent = new Intent(this, CommunicationsEnableActivity.class);
 			startActivity(intent);
@@ -41,6 +46,10 @@ public class MainActivity extends Activity {
 	public void makeRoom (View v)
 	{
 		// 방을 만드는 Activity 실행
+		Intent intent = new Intent (this, MakeRoomActivity.class);
+		startActivity(intent);
+		
+		// 적절한 동작을 하고 현재 Activity 종료
 		finish();
 	}
 	

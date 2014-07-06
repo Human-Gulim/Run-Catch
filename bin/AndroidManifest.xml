@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -24,11 +25,6 @@
         <activity
             android:name="org.human.gulim.runcatch.MainActivity"
             android:label="@string/title_activity_main" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="org.human.gulim.runcatch.SetNickNameActivity"
@@ -41,6 +37,23 @@
         <activity
             android:name="org.human.gulim.runcatch.CommunicationsEnableActivity"
             android:label="@string/title_activity_communications_enable" >
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.SplashActivity"
+            android:label="@string/title_activity_splash" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.MakeRoomActivity"
+            android:label="@string/title_activity_make_room" >
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.WaitUserActivity"
+            android:label="@string/title_activity_wait_user" >
         </activity>
     </application>
 
