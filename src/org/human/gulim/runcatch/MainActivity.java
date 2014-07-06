@@ -46,6 +46,10 @@ public class MainActivity extends Activity {
 	public void makeRoom (View v)
 	{
 		// 방을 만드는 Activity 실행
+		Intent intent = new Intent (this, MakeRoomActivity.class);
+		startActivity(intent);
+		
+		// 적절한 동작을 하고 현재 Activity 종료
 		finish();
 	}
 	

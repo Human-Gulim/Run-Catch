@@ -47,6 +47,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.MakeRoomActivity"
+            android:label="@string/title_activity_make_room" >
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.WaitUserActivity"
+            android:label="@string/title_activity_wait_user" >
+        </activity>
     </application>
 
 </manifest>
