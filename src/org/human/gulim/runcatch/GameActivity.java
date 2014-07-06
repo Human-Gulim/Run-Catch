@@ -7,6 +7,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +31,8 @@ public class GameActivity extends Activity {
 			final TextView itemName = (TextView) layoutView.findViewById(R.id.itemNameLbl);
 			final TextView itemDesc = (TextView) layoutView.findViewById(R.id.itemDescLbl);
 			final ImageView itemImg = (ImageView) layoutView.findViewById(R.id.itemImgView);
-
+			final Button closeDialog = (Button) layoutView.findViewById(R.id.exitBtn);
+			
 			itemName.setText("투시 안경");
 			itemDesc.setText("이거슨 투시 안경이다");
 
@@ -59,7 +61,16 @@ public class GameActivity extends Activity {
 
 				});
 
-				AlertDialog built = dialogBuilder.create();
+				final AlertDialog built = dialogBuilder.create();
+				closeDialog.setOnClickListener(new Button.OnClickListener () {
+
+					@Override
+					public void onClick(View v) {
+						built.dismiss();
+						
+					}
+					
+				});
 				built.show();
 			}
 			else
@@ -78,7 +89,16 @@ public class GameActivity extends Activity {
 
 				});
 
-				AlertDialog built = dialogBuilder.create();
+				final AlertDialog built = dialogBuilder.create();
+				closeDialog.setOnClickListener(new Button.OnClickListener () {
+
+					@Override
+					public void onClick(View v) {
+						built.dismiss();
+						
+					}
+					
+				});
 				built.show();
 			}
 
@@ -93,6 +113,7 @@ public class GameActivity extends Activity {
 			final TextView itemName = (TextView) layoutView.findViewById(R.id.itemNameLbl);
 			final TextView itemDesc = (TextView) layoutView.findViewById(R.id.itemDescLbl);
 			final ImageView itemImg = (ImageView) layoutView.findViewById(R.id.itemImgView);
+			final Button closeDialog = (Button) layoutView.findViewById(R.id.exitBtn);
 
 			itemName.setText("무적");
 			itemDesc.setText("몇 초간 무적이다");
@@ -122,7 +143,16 @@ public class GameActivity extends Activity {
 
 				});
 
-				AlertDialog built = dialogBuilder.create();
+				final AlertDialog built = dialogBuilder.create();
+				closeDialog.setOnClickListener(new Button.OnClickListener () {
+
+					@Override
+					public void onClick(View v) {
+						built.dismiss();
+						
+					}
+					
+				});
 				built.show();
 			}
 			else
@@ -141,7 +171,16 @@ public class GameActivity extends Activity {
 
 				});
 
-				AlertDialog built = dialogBuilder.create();
+				final AlertDialog built = dialogBuilder.create();
+				closeDialog.setOnClickListener(new Button.OnClickListener () {
+
+					@Override
+					public void onClick(View v) {
+						built.dismiss();
+						
+					}
+					
+				});
 				built.show();
 			}
 
@@ -156,6 +195,7 @@ public class GameActivity extends Activity {
 			final TextView itemName = (TextView) layoutView.findViewById(R.id.itemNameLbl);
 			final TextView itemDesc = (TextView) layoutView.findViewById(R.id.itemDescLbl);
 			final ImageView itemImg = (ImageView) layoutView.findViewById(R.id.itemImgView);
+			final Button closeDialog = (Button) layoutView.findViewById(R.id.exitBtn);
 
 			itemName.setText("지도");
 			itemDesc.setText("이거슨  지도이다");
@@ -204,7 +244,16 @@ public class GameActivity extends Activity {
 
 				});
 
-				AlertDialog built = dialogBuilder.create();
+				final AlertDialog built = dialogBuilder.create();
+				closeDialog.setOnClickListener(new Button.OnClickListener () {
+
+					@Override
+					public void onClick(View v) {
+						built.dismiss();
+						
+					}
+					
+				});
 				built.show();
 			}
 
