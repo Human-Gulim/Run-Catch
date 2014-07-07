@@ -18,6 +18,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import android.util.Log;
+
 
 public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 
@@ -37,12 +39,15 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			
 			oOut.writeObject(request);
 			oOut.flush();
-
+			System.out.println("Flushed");
 			oIn = new ObjectInputStream(new BufferedInputStream(
 					socket.getInputStream()));
 			response = oIn.readObject();
+			System.out.println("Read object");
 			result = responseToRoomInfo(response);
-
+			System.out.println("Got result");
+			
+			
 		} catch (UnknownHostException e) {
 			throw new NetworkMethodException(e);
 		} catch (IOException e) {
@@ -50,10 +55,15 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		} catch (ClassNotFoundException e) {
 			throw new NetworkMethodException(e);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new NetworkMethodException(e);
 		} finally {
 			freeResources(socket, oIn, oOut);
+			
+		}
+		
+		if ( result == null )
+		{
+			Log.d("error", "NetworkMethod returning null");
 		}
 		return result;
 	}
@@ -77,7 +87,8 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		
 		//obj =(JSONObject) response;
 		
-		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj.get("data"));
+		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj);
+		System.out.println(roomInfo.getId_room());
 		return roomInfo;
 	}
 

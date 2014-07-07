@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class MakeRoomActivity extends Activity {
 
-	public static RoomInfo roomInfo = new RoomInfo();
+	public static RoomInfo roomInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +25,11 @@ public class MakeRoomActivity extends Activity {
 		setContentView(R.layout.activity_make_room);
 	}
 
-	public void makeRoom (View v)
+	public void makeRoom (final View v)
 	{
+		roomInfo = new RoomInfo();
 		// 서버에 데이터를 보내 방을 만들게 함
-
+		v.setEnabled(false);
 
 		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -49,6 +50,9 @@ public class MakeRoomActivity extends Activity {
 				if ( result == null )
 				{
 					Toast.makeText(getApplicationContext(), "서버와 연결을 실패했습니다.\n잠시 후 다시 시도해주세요", Toast.LENGTH_LONG).show();
+					v.setEnabled(true);
+					
+					this.cancel(true);
 					return;
 				}
 				super.onPostExecute(result);
@@ -70,7 +74,7 @@ public class MakeRoomActivity extends Activity {
 				try {
 					roomInfo = toServ.emitEvent(NetworkMethod.CREATE_ROOM, roomInfo);
 				} catch (NetworkMethodException e) {
-					Log.d("error", "Creating room failed");
+					roomInfo = null;
 				}
 
 				return roomInfo;

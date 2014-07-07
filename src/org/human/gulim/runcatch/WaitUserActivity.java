@@ -169,7 +169,7 @@ public class WaitUserActivity extends Activity {
 			}
 			else
 			{
-
+				team2.put(list.get(i).getId(), list.get(i));
 			}
 		}
 
