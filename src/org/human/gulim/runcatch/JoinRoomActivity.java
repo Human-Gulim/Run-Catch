@@ -87,7 +87,8 @@ public class JoinRoomActivity extends Activity {
 		
 		NdefRecord [] records = new NdefRecord[2];
 		
-		records[0] = NdefRecord.createUri(content);
+		records[0] = NdefRecord.createMime("text/plain", content.getBytes());
+		//records[0] = NdefRecord.createUri(content);
 		records[1] = NdefRecord.createApplicationRecord("org.human,gulim.runcatch");
 		
 		msg = new NdefMessage(records);
@@ -112,6 +113,7 @@ public class JoinRoomActivity extends Activity {
 						// 만약 돌아온 응답이 null 이라면, 5초 후 다시 시도
 						if ( result == null )
 						{
+							Log.d("error", "isStart returned null, retrying after 5 seconds");
 							final PollStartStatusTask task = new PollStartStatusTask ();
 							Handler handler = new Handler();
 							
@@ -136,8 +138,7 @@ public class JoinRoomActivity extends Activity {
 						try {
 							roomInfo = toServ.emitEvent(NetworkMethod.IS_STARTED, me);
 						} catch (NetworkMethodException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							Log.d("error", "isStart checking failed");
 						}
 						
 						return roomInfo;

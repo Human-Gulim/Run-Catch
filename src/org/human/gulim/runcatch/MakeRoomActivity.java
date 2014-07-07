@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -56,11 +57,10 @@ public class MakeRoomActivity extends Activity {
 				try {
 					roomInfo = toServ.emitEvent(NetworkMethod.CREATE_ROOM, roomInfo);
 				} catch (NetworkMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.d("error", "Creating room failed");
 				}
 				
-				return null;
+				return roomInfo;
 			}
 			
 		}

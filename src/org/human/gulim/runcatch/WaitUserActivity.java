@@ -107,7 +107,7 @@ public class WaitUserActivity extends Activity {
 					JSONParser parser = new JSONParser();
 					JSONObject obj = null;
 					try {
-						obj = (JSONObject) parser.parse(message.substring(2));
+						obj = (JSONObject) parser.parse(message);
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -181,8 +181,7 @@ public class WaitUserActivity extends Activity {
 
 			@Override
 			protected void onPostExecute(RoomInfo result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
+				MakeRoomActivity.roomInfo = result;
 			}
 
 			@Override
@@ -195,7 +194,7 @@ public class WaitUserActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return null;
+				return MakeRoomActivity.roomInfo;
 			}
 
 		}
