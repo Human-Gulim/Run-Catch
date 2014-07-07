@@ -156,22 +156,37 @@ public class WaitUserActivity extends Activity {
 	public void startGame (View v)
 	{
 		// 있는 방에 사람들을 참여시킴
-		Team team1 = new Team();
-		Team team2 = new Team();
+		Team team1 = new Team(); // 경찰
+		Team team2 = new Team(); // 도둑
 
 		Random r = new Random();
+		boolean okToStart = false;
 
-		for (int i=0; i<list.size(); i++)
+		while (!okToStart)
 		{
-			if ( r.nextInt() % 2 == 0 )
+			for (int i=0; i<list.size(); i++)
 			{
-				team1.put(list.get(i).getId(), list.get(i));
+				if ( r.nextInt() % 2 == 0 )
+				{
+					team1.put(list.get(i).getId(), list.get(i));
+				}
+				else
+				{
+					team2.put(list.get(i).getId(), list.get(i));
+				}
+			}
+			if ( team1.getCount() > team2.getCount() || ((team1.getCount() != 0) && (team2.getCount() != 0) ) )
+			{
+				// retry
+				team1 = new Team();
+				team2 = new Team();
 			}
 			else
 			{
-				team2.put(list.get(i).getId(), list.get(i));
+				okToStart = true;
 			}
 		}
+
 
 		MakeRoomActivity.roomInfo.putTeam(0, team1);
 		MakeRoomActivity.roomInfo.putTeam(1, team2);
@@ -182,6 +197,12 @@ public class WaitUserActivity extends Activity {
 			@Override
 			protected void onPostExecute(RoomInfo result) {
 				MakeRoomActivity.roomInfo = result;
+				// 게임 시작 activity로 전환 후 현재 activity 종료
+
+				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+				startActivity(intent);
+
+				finish();
 			}
 
 			@Override
@@ -202,11 +223,5 @@ public class WaitUserActivity extends Activity {
 		AddMemberTask task = new AddMemberTask ();
 		task.execute();
 
-		// 게임 시작 activity로 전환 후 현재 activity 종료
-
-		Intent intent = new Intent(this, GameActivity.class);
-		startActivity(intent);
-
-		finish();
 	}
 }
