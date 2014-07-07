@@ -1,11 +1,17 @@
 package org.human.gulim.runcatch;
 
+import java.util.List;
+
+import org.human.gulim.runcatch.bean.Team;
+import org.human.gulim.runcatch.bean.User;
+
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,17 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener, MapView.CurrentLocationEventListener, MapView.POIItemEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener{
-	
+
 	private static final int MENU_MAP_TYPE = Menu.FIRST + 1;
 	private static final int MENU_MAP_MOVE = Menu.FIRST + 2;
 	private static final int MENU_LOCATION_TRACKING = Menu.FIRST + 3;
 	private static final int MENU_MAP_OVERLAY = Menu.FIRST + 4;
-	
+
 	private static final String LOG_TAG = "DaumMapLibrarySample";
-	
+
 	private MapView mapView;
 	private MapPOIItem poiItem;
-	
+
 	private MapReverseGeoCoder reverseGeoCoder = null;
 
 	@Override
@@ -49,8 +55,8 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 		textView.setTextColor(Color.WHITE);
 
 		linearLayout.addView(textView);
-*/
-		
+		 */
+
 		MapView.setMapTilePersistentCacheEnabled(true);
 
 		mapView = new MapView(this);
@@ -68,6 +74,52 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 
 		setContentView(linearLayout);
 
+		Intent intent = getIntent();
+		String mode = intent.getStringExtra("mode");
+
+		if ( mode.equals("map_item"))
+		{
+			Team t1 = MakeRoomActivity.roomInfo.getTeam(0); // °æÂû
+			Team t2 = MakeRoomActivity.roomInfo.getTeam(1); // µµµÏ
+
+			BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+			final String mac = BTAdapter.getAddress();
+
+			List<User> t1List = t1.getMembers();
+			List<User> t2List = t2.getMembers();
+
+			for ( int i=0; i<t1.getCount(); i++)
+			{	
+				poiItem = new MapPOIItem();
+				poiItem.setItemName(t1List.get(i).getNickname());
+				poiItem.setMapPoint(MapPoint.mapPointWithGeoCoord(t1List.get(i).getLatitude(),t1List.get(i).getLongitude()));
+				poiItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
+				poiItem.setShowAnimationType(MapPOIItem.ShowAnimationType.DropFromHeaven);
+				
+				if ( t1List.get(i).getId().equals(mac))
+					poiItem.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+				
+				mapView.addPOIItem(poiItem);
+			}
+			
+			for ( int i=0; i<t2.getCount(); i++)
+			{				
+				poiItem = new MapPOIItem();
+				poiItem.setItemName(t2List.get(i).getNickname());
+				poiItem.setMapPoint(MapPoint.mapPointWithGeoCoord(t2List.get(i).getLatitude(),t2List.get(i).getLongitude()));
+				poiItem.setMarkerType(MapPOIItem.MarkerType.RedPin);
+				poiItem.setShowAnimationType(MapPOIItem.ShowAnimationType.DropFromHeaven);
+				
+				if ( t2List.get(i).getId().equals(mac))
+					poiItem.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+				
+				mapView.addPOIItem(poiItem);
+			}
+			mapView.setCurrentLocationEventListener(this);
+			mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading); 
+		}
+
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +136,7 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 	public void onMapViewInitialized(MapView mapView) { 
 		Log.i(LOG_TAG, "MapView had loaded. Now, MapView APIs could be called safely"); 
 		//mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+		
 		mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(37.537229,127.005515), 2, true);
 	} 
 
@@ -95,7 +148,7 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 
 	@Override
 	public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
-/*
+		/*
 		MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
 
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -103,12 +156,12 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 		alertDialog.setMessage(String.format("Double-Tap on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
 		alertDialog.setPositiveButton("OK", null);
 		alertDialog.show();
-		*/
+		 */
 	}
 
 	@Override
 	public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-/*
+		/*
 		MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
 
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -116,7 +169,7 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 		alertDialog.setMessage(String.format("Long-Press on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
 		alertDialog.setPositiveButton("OK", null);
 		alertDialog.show();
-		*/
+		 */
 	}
 
 	@Override
@@ -124,7 +177,7 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 		/*
 		MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
 		Log.i(LOG_TAG, String.format("MapView onMapViewSingleTapped (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
-	*/
+		 */
 	}
 
 	@Override
