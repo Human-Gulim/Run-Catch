@@ -13,7 +13,14 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-feature android:required="false" android:name="android.hardware.camera.autofocus"></uses-feature>
+	<uses-feature android:required="false" android:name="android.hardware.camera.flash"></uses-feature>
+	<uses-feature android:required="false" android:name="android.hardware.camera.front"></uses-feature>
+	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+	
+	<supports-screens android:anyDensity="true" android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true"></supports-screens>
+	
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
@@ -23,6 +30,68 @@
         android:icon="@drawable/ic_launcher"
         android:label="Run and Catch"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="com.google.android.maps" />
+        
+        <activity android:name="org.mixare.MainActivity" android:icon="@drawable/ic_launcher"
+				  android:label="@string/app_name" android:screenOrientation="landscape" >
+    	    
+    	</activity>
+        
+         <activity android:label="@string/app_name" android:name="org.mixare.MixView" 
+        android:screenOrientation="landscape"  
+        android:launchMode="singleTop" >
+            
+            <intent-filter>  
+                  <action android:name="android.intent.action.VIEW" />
+				  <category android:name="android.intent.category.DEFAULT" />
+				  <category android:name="android.intent.category.BROWSABLE" />
+				  <data android:scheme="http" android:mimeType="application/mixare-json"/>
+				  <data android:scheme="content" android:mimeType="application/mixare-json"/>
+				  <data android:scheme="file" android:mimeType="application/mixare-json"/>
+            </intent-filter>
+            
+            <intent-filter>
+        	    <action android:name="android.intent.action.SEARCH"/>
+        	</intent-filter>
+        	<meta-data android:name="android.app.searchable"
+                   	android:resource="@xml/searchable"/>
+            <meta-data android:name="android.app.default_searchable"
+               		android:value="org.mixare.MixView" />
+        </activity>
+        
+		<activity android:name="org.mixare.PluginLoaderActivity">
+		    <intent-filter> 
+         		<action android:name="android.intent.action.MAIN" />
+     		</intent-filter>
+		</activity>
+		
+		<activity android:name="org.mixare.MixListView" 
+			android:screenOrientation="user" 
+			android:launchMode="singleTop">
+			<intent-filter>
+	            <action android:name="android.intent.action.SEARCH" />
+	        </intent-filter>
+	        <meta-data android:name="android.app.searchable"
+                   	android:resource="@xml/searchable"/>
+		</activity>
+
+		<activity android:name="org.mixare.MixMap" 
+			android:screenOrientation="user" 
+			android:launchMode="singleTop">
+			<intent-filter>
+	            <action android:name="android.intent.action.SEARCH" />
+	        </intent-filter>
+	        <meta-data android:name="android.app.searchable"
+                   	android:resource="@xml/searchable"/>
+		</activity>
+		 <activity android:name="org.mixare.data.DataSource" />
+		 <activity android:name="org.mixare.data.DataSourceList" />
+        
+        
+        
+        
+        
+        
         <activity
             android:name="org.human.gulim.runcatch.MainActivity"
             android:label="@string/title_activity_main" >

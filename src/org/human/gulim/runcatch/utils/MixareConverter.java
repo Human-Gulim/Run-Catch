@@ -9,9 +9,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class MixareConverter {
-	
+
 	@SuppressWarnings("unchecked")
-	public static String getPageContentWithSameTeam(RoomInfo roomInfo, User user){
+	public static String getPageContentWithSameTeam(RoomInfo roomInfo, User user) {
 		JSONObject j_result = new JSONObject();
 		JSONArray j_array = new JSONArray();
 		JSONObject j_user;
@@ -20,33 +20,71 @@ public class MixareConverter {
 		j_result.put("status", "OK");
 		j_result.put("num_results", team.getCount());
 		j_result.put("results", j_array);
-		
-		HashSet<Integer> set= new HashSet<Integer>();
-		
-		for(User tmpUser : team.getMembers())
-		{
-			while(true)
-			{
-				id =(int) Math.round(Math.random()*3000);
-				if(set.contains(id)==false)
-				{
+
+		HashSet<Integer> set = new HashSet<Integer>();
+
+		for (User tmpUser : team.getMembers()) {
+			while (true) {
+				id = (int) Math.round(Math.random() * 3000);
+				if (set.contains(id) == false) {
 					set.add(id);
 					break;
 				}
 			}
-			
+
 			j_user = new JSONObject();
-			j_user.put("id",id+"");
-			j_user.put("lat", tmpUser.getLatitude()+"");
-			j_user.put("lng", tmpUser.getLongitude()+"");
+			j_user.put("id", id + "");
+			j_user.put("lat", tmpUser.getLatitude() + "");
+			j_user.put("lng", tmpUser.getLongitude() + "");
 			j_user.put("title", tmpUser.getNickname());
 			j_user.put("elevation", "0");
-			j_user.put("distance", "5");
+			j_user.put("distance", "0.001");
 			j_user.put("has_detail_page", "0");
 			j_user.put("webpage", "");
 			j_array.add(j_user);
-			
+
 		}
+		return j_result.toJSONString();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String getPageContentWithEveryMember(RoomInfo roomInfo) {
+		JSONObject j_result = new JSONObject();
+		JSONArray j_array = new JSONArray();
+		JSONObject j_user;
+		int id;
+		int total = 0;
+
+		j_result.put("status", "OK");
+
+		j_result.put("results", j_array);
+
+		HashSet<Integer> set = new HashSet<Integer>();
+		for (Team team : roomInfo.getTeams().values()) {
+			total += team.getCount();
+			for (User tmpUser : team.getMembers()) {
+				while (true) {
+					id = (int) Math.round(Math.random() * 3000);
+					if (set.contains(id) == false) {
+						set.add(id);
+						break;
+					}
+				}
+
+				j_user = new JSONObject();
+				j_user.put("id", id + "");
+				j_user.put("lat", tmpUser.getLatitude() + "");
+				j_user.put("lng", tmpUser.getLongitude() + "");
+				j_user.put("title", tmpUser.getNickname());
+				j_user.put("elevation", "0");
+				j_user.put("distance", "5");
+				j_user.put("has_detail_page", "0");
+				j_user.put("webpage", "");
+				j_array.add(j_user);
+
+			}
+		}
+		j_result.put("num_results", total);
 		return j_result.toJSONString();
 	}
 

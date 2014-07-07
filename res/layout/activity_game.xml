@@ -118,4 +118,12 @@
         </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/testBtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/imageView1"
+        android:text="Button" />
+
 </RelativeLayout>

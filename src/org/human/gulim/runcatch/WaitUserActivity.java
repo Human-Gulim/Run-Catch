@@ -19,8 +19,8 @@ import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.IntentFilter.MalformedMimeTypeException;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -41,6 +41,8 @@ public class WaitUserActivity extends Activity {
 	IntentFilter[] mNdefExchangeFilters;
 	PendingIntent mNfcPendingIntent;
 	ListView lView;
+	//TODO
+	public static User me;
 
 
 	@Override
@@ -180,6 +182,10 @@ public class WaitUserActivity extends Activity {
 		
 		Random r = new Random();
 		boolean okToStart = false;
+		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+		   
+	     final String id = BTAdapter.getAddress();
+
 
 		while (!okToStart)
 		{
@@ -194,6 +200,11 @@ public class WaitUserActivity extends Activity {
 				{
 					list.get(i).setId_team(1);
 					team2.put(list.get(i).getId(), list.get(i));
+				}
+				//TODO
+				if(list.get(i).getId().equals(id))
+				{
+					me = list.get(i);
 				}
 			}
 			if ( !(team1.getCount() <= team2.getCount()) || ((team1.getCount() == 0) || (team2.getCount() == 0) ) )
@@ -211,6 +222,12 @@ public class WaitUserActivity extends Activity {
 				okToStart = true;
 			}
 		}
+		//TODO
+		//
+		
+		
+	      
+		
 
 
 		MakeRoomActivity.roomInfo.putTeam(0, team1);

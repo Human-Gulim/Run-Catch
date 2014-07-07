@@ -6,10 +6,12 @@ import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
 import org.human.gulim.runcatch.factory.NetworkMethodFactory;
 import org.human.gulim.runcatch.network.NetworkMethod;
+import org.mixare.MixView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -32,6 +34,17 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		me = this;
+		final Context ctx = getApplicationContext();
+		
+		Button btn = (Button)findViewById(R.id.testBtn1);
+		btn.setOnClickListener(new android.view.View.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(ctx, MixView.class));
+			}
+		});
 		
 		Intent intent = new Intent(getBaseContext(), LocationFetchService.class);
 		startService(intent);

@@ -24,6 +24,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.human.gulim.runcatch.MakeRoomActivity;
+import org.human.gulim.runcatch.WaitUserActivity;
+import org.human.gulim.runcatch.utils.MixareConverter;
 import org.mixare.MixContext;
 import org.mixare.MixView;
 import org.mixare.data.convert.DataConvertor;
@@ -83,23 +86,29 @@ class DownloadMgrImpl implements Runnable, DownloadManager {
 		final DownloadResult result = new DownloadResult();
 		try {
 			if (request == null) {
+				Log.e("seq", "1");
 				throw new Exception("Request is null");
 			}
 			
 			if (!request.getSource().isWellFormed()) {
+				Log.e("seq", "2");
 				throw new Exception("Datasource in not WellFormed");
 			}
 
-			String pageContent = HttpTools.getPageContent(request,
-					ctx.getContentResolver());
-
+			//String pageContent = HttpTools.getPageContent(request,
+				//	ctx.getContentResolver());//TODO
+			Log.e("seq", "3");
+			String pageContent = MixareConverter.getPageContentWithEveryMember(MakeRoomActivity.roomInfo);
+			Log.e("seq", pageContent.toString());
 			if (pageContent != null) {
 				// try loading Marker data
+				Log.e("seq", "url "+request.getSource().getUrl());
 				List<Marker> markers = DataConvertor.getInstance().load(
 						request.getSource().getUrl(), pageContent,
 						request.getSource());
 				result.setAccomplish(mRequest.getUniqueKey(), markers,
 						request.getSource());
+				Log.e("seq", "4");
 			}
 		} catch (Exception ex) {
 			result.setError(ex, request);
