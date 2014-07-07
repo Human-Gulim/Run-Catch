@@ -16,8 +16,10 @@ import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -25,6 +27,7 @@ import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -72,6 +75,18 @@ public class WaitUserActivity extends Activity {
 			e.printStackTrace();
 		}
 		mNdefExchangeFilters = new IntentFilter[] { ndefDetected };
+		
+		User me = new User();
+		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+		String mac = BTAdapter.getAddress();
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		final String nickName = pref.getString("nickName", "");
+		
+		me.setId(mac);
+		me.setId_room(mac);
+		me.setNickname(nickName);
+		
+		memberAdd(me);
 
 	}
 
@@ -155,23 +170,48 @@ public class WaitUserActivity extends Activity {
 
 	public void startGame (View v)
 	{
+		v.setEnabled(false);
 		// 있는 방에 사람들을 참여시킴
-		Team team1 = new Team();
-		Team team2 = new Team();
+		Team team1 = new Team(); // 경찰
+		Team team2 = new Team(); // 도둑
 
+		team1.setId_team(0);
+		team2.setId_team(1);
+		
 		Random r = new Random();
+		boolean okToStart = false;
 
-		for (int i=0; i<list.size(); i++)
+		while (!okToStart)
 		{
-			if ( r.nextInt() % 2 == 0 )
+			for (int i=0; i<list.size(); i++)
 			{
-				team1.put(list.get(i).getId(), list.get(i));
+				if ( r.nextInt() % 2 == 0 )
+				{
+					list.get(i).setId_team(0);
+					team1.put(list.get(i).getId(), list.get(i));
+				}
+				else
+				{
+					list.get(i).setId_team(1);
+					team2.put(list.get(i).getId(), list.get(i));
+				}
+			}
+			if ( !(team1.getCount() <= team2.getCount()) || ((team1.getCount() == 0) || (team2.getCount() == 0) ) )
+			{
+				// retry
+				team1 = new Team();
+				team2 = new Team();
+				
+				team1.setId_team(0);
+				team2.setId_team(1);
+				
 			}
 			else
 			{
-				team2.put(list.get(i).getId(), list.get(i));
+				okToStart = true;
 			}
 		}
+
 
 		MakeRoomActivity.roomInfo.putTeam(0, team1);
 		MakeRoomActivity.roomInfo.putTeam(1, team2);
@@ -182,6 +222,12 @@ public class WaitUserActivity extends Activity {
 			@Override
 			protected void onPostExecute(RoomInfo result) {
 				MakeRoomActivity.roomInfo = result;
+				// 게임 시작 activity로 전환 후 현재 activity 종료
+
+				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+				startActivity(intent);
+
+				finish();
 			}
 
 			@Override
@@ -202,11 +248,5 @@ public class WaitUserActivity extends Activity {
 		AddMemberTask task = new AddMemberTask ();
 		task.execute();
 
-		// 게임 시작 activity로 전환 후 현재 activity 종료
-
-		Intent intent = new Intent(this, GameActivity.class);
-		startActivity(intent);
-
-		finish();
 	}
 }
