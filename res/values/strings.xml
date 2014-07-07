@@ -12,5 +12,6 @@
     <string name="title_activity_make_room">MakeRoomActivity</string>
     <string name="title_activity_wait_user">WaitUserActivity</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 
 </resources>
