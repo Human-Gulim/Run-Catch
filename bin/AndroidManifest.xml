@@ -5,13 +5,14 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -54,6 +55,10 @@
         <activity
             android:name="org.human.gulim.runcatch.WaitUserActivity"
             android:label="@string/title_activity_wait_user" >
+        </activity>
+        <activity
+            android:name="org.human.gulim.runcatch.GameActivity"
+            android:label="@string/title_activity_game" >
         </activity>
     </application>
 

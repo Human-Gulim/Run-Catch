@@ -19,6 +19,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+import android.util.Log;
+
+
 public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 
 	/**
@@ -46,12 +49,15 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			
 			oOut.writeObject(request);
 			oOut.flush();
-
+			System.out.println("Flushed");
 			oIn = new ObjectInputStream(new BufferedInputStream(
 					socket.getInputStream()));
 			response = oIn.readObject();
+			System.out.println("Read object");
 			result = responseToRoomInfo(response);
-
+			System.out.println("Got result");
+			
+			
 		} catch (UnknownHostException e) {
 			throw new NetworkMethodException(e);
 		} catch (IOException e) {
@@ -59,10 +65,16 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		} catch (ClassNotFoundException e) {
 			throw new NetworkMethodException(e);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+
 			throw new NetworkMethodException(e);
 		} finally {
 			freeResources(socket, oIn, oOut);
+			
+		}
+		
+		if ( result == null )
+		{
+			Log.d("error", "NetworkMethod returning null");
 		}
 		return result;
 	}
@@ -73,17 +85,24 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		obj.put("event", event);
 		obj.put("data", jsonable.toJSONObject());
 		
-		
+		System.out.println(jsonable.toJSONObject().toJSONString());
+		System.out.println(obj.toJSONString());
 		return obj.toJSONString();
 	}
 
 	private RoomInfo responseToRoomInfo(Object response) throws ParseException {
+
+		JSONParser parser = new JSONParser();
+
 		RoomInfo roomInfo = null;
 		JSONObject obj = null;
-		JSONParser parser = new JSONParser();
-		obj = (JSONObject) parser.parse(response.toString());
+
+		obj = (JSONObject)parser.parse((String)response);
 		
-		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj.get("data"));
+		//obj =(JSONObject) response;
+		
+		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj);
+		System.out.println(roomInfo.getId_room());
 		return roomInfo;
 	}
 

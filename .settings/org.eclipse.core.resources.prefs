@@ -1,4 +1,14 @@
 eclipse.preferences.version=1
+encoding//src/org/human/gulim/runcatch/CommunicationsEnableActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/GameActivity.java=UTF-8
 encoding//src/org/human/gulim/runcatch/JoinRoomActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/MainActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/MakeRoomActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/SetNickNameActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/SplashActivity.java=UTF-8
+encoding//src/org/human/gulim/runcatch/WaitUserActivity.java=UTF-8
 encoding//src/org/human/gulim/runcatch/bean/Item.java=MS949
+encoding//src/org/human/gulim/runcatch/bean/Jsonable.java=UTF-8
 encoding//src/org/human/gulim/runcatch/bean/RoomInfo.java=MS949
+encoding//src/org/human/gulim/runcatch/bean/Team.java=UTF-8
+encoding//src/org/human/gulim/runcatch/bean/User.java=UTF-8
