@@ -1,12 +1,22 @@
 package org.human.gulim.runcatch;
 
+import org.human.gulim.runcatch.bean.RoomInfo;
+import org.human.gulim.runcatch.bean.User;
+import org.human.gulim.runcatch.exception.NetworkMethodException;
+import org.human.gulim.runcatch.factory.NetworkMethodFactory;
+import org.human.gulim.runcatch.network.NetworkMethod;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
+import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -16,6 +26,8 @@ public class JoinRoomActivity extends Activity {
 	NdefMessage msg;
 	JoinRoomActivity thisActivity = this;
 
+	public static User me = new User();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +40,7 @@ public class JoinRoomActivity extends Activity {
 		// Shared Preference에서 Nickname을 가져오기
 		
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		String nickName = pref.getString("nickName", "");
+		final String nickName = pref.getString("nickName", "");
 		
 		if ( nickName.equals(""))
 		{
@@ -44,10 +56,15 @@ public class JoinRoomActivity extends Activity {
 		
 		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
 	
-		String mac = BTAdapter.getAddress();
+		final String mac = BTAdapter.getAddress();
+		
+		
+		me.setNickname(nickName);
+		me.setId(mac);
 		
 		// NFC로 보낼 내용을 생성 - content
-		String content = nickName + "\n" + mac;
+		//String content = nickName + "\n" + mac;
+		String content = me.toJSONObject().toJSONString();
 
 		NdefRecord [] records = new NdefRecord[2];
 		
@@ -56,10 +73,72 @@ public class JoinRoomActivity extends Activity {
 		
 		msg = new NdefMessage(records);
 		
-		Log.d("verbose", "Warning, ndef message is null");
+		//Log.d("verbose", "Warning, ndef message is null");
 		nfcAdapter.setNdefPushMessage(msg, thisActivity);
+		
+		class SuccessBeamCallback implements OnNdefPushCompleteCallback{
+
+			@Override
+			public void onNdefPushComplete(NfcEvent event) {
+				// 게임 시작을 기다린다는 내용의 UI로 변경
+					/* Do something */
+				// 서버 폴링 시작
+				
+				
+				
+				class PollStartStatusTask extends AsyncTask <Void, Void, RoomInfo>
+				{
+					@Override
+					protected void onPostExecute(RoomInfo result) {
+						// 만약 돌아온 응답이 null 이라면, 5초 후 다시 시도
+						if ( result == null )
+						{
+							final PollStartStatusTask task = new PollStartStatusTask ();
+							Handler handler = new Handler();
+							
+							handler.postDelayed(new Runnable() {
+
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									task.execute();
+								}
+								
+							}, 5000);
+						}
+						super.onPostExecute(result);
+					}
+
+					@Override
+					protected RoomInfo doInBackground(Void... params) {
+						NetworkMethod toServ = NetworkMethodFactory.getInstance();
+						RoomInfo roomInfo = null;
+						
+						try {
+							roomInfo = toServ.emitEvent(NetworkMethod.IS_STARTED, me);
+						} catch (NetworkMethodException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						return roomInfo;
+					}
+					
+				}
+				
+				PollStartStatusTask task = new PollStartStatusTask();
+				task.execute();
+					
+			}
+
+		}
+		
+		SuccessBeamCallback callback = new SuccessBeamCallback();
+
+		nfcAdapter.setOnNdefPushCompleteCallback(callback, this);
 
 	}
 
+	
 
 }

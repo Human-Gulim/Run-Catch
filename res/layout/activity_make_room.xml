@@ -10,9 +10,9 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText1"
-        android:layout_alignTop="@+id/editText1"
-        android:layout_toLeftOf="@+id/editText1"
+        android:layout_alignBottom="@+id/gameTimeText"
+        android:layout_alignTop="@+id/gameTimeText"
+        android:layout_toLeftOf="@+id/gameTimeText"
         android:gravity="center_vertical"
         android:text="시간"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -21,9 +21,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignTop="@+id/editText2"
-        android:layout_toLeftOf="@+id/editText2"
+        android:layout_alignBottom="@+id/gameDistanceText"
+        android:layout_alignTop="@+id/gameDistanceText"
+        android:layout_toLeftOf="@+id/gameDistanceText"
         android:gravity="center_vertical"
         android:text="거리"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -48,24 +48,24 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/gameDistanceText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="57dp" >
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/gameTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignLeft="@+id/gameDistanceText"
         android:layout_centerVertical="true"
         android:ems="10" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/gameDistanceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/gameTimeText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:ems="10" >
