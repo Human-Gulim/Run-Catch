@@ -170,6 +170,7 @@ public class WaitUserActivity extends Activity {
 
 	public void startGame (View v)
 	{
+		v.setEnabled(false);
 		// 있는 방에 사람들을 참여시킴
 		Team team1 = new Team(); // 경찰
 		Team team2 = new Team(); // 도둑
@@ -195,7 +196,7 @@ public class WaitUserActivity extends Activity {
 					team2.put(list.get(i).getId(), list.get(i));
 				}
 			}
-			if ( !(team1.getCount() < team2.getCount()) || ((team1.getCount() == 0) || (team2.getCount() == 0) ) )
+			if ( !(team1.getCount() <= team2.getCount()) || ((team1.getCount() == 0) || (team2.getCount() == 0) ) )
 			{
 				// retry
 				team1 = new Team();
