@@ -39,6 +39,10 @@ public class Team implements Jsonable{
 		members.addAll(memberMap.values());
 		return members;
 	}
+	public User remove(String key)
+	{
+		return memberMap.remove(key);
+	}
 	
 	public int getId_team() {
 		return id_team;

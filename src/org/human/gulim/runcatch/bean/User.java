@@ -13,6 +13,7 @@ public class User implements Jsonable{
 	private double latitude;
 	private double longitude;
 	private int id_team;
+	private int future_id_team;
 	
 	public User(){
 		this.id_room = null;
@@ -22,6 +23,7 @@ public class User implements Jsonable{
 		this.latitude = -1;
 		this.longitude = -1;
 		this.id_team = -1;
+		this.future_id_team=-1;
 	}
 	
 	public String getId_room() {
@@ -115,6 +117,13 @@ public class User implements Jsonable{
 			user.setId_team(Integer.parseInt(value.toString()));
 		}
 		
+		value = obj.get("future_id_team");
+		if(value!=null)
+		{
+			user.setFuture_id_team(Integer.parseInt(value.toString()));
+		}
+		
+		
 		return user;
 	}
 
@@ -137,9 +146,19 @@ public class User implements Jsonable{
 		obj.put("phone", phone);
 		obj.put("latitude", latitude);
 		obj.put("id_team", id_team);
-		
+		obj.put("future_id_team", future_id_team);
+
 		return obj;
 	}
+
+	public int getFuture_id_team() {
+		return future_id_team;
+	}
+
+	public void setFuture_id_team(int future_id_team) {
+		this.future_id_team = future_id_team;
+	}
+
 	
 
 }

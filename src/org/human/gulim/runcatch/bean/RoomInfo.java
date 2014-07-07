@@ -14,6 +14,10 @@ public class RoomInfo implements Jsonable{
 	private Map<Integer, Team>teamMap;
 	private int mode;
 
+	public static int WAIT_MODE = 0;
+	public static int NORMAL_MODE = 1;
+	public static int ESCAPE_MODE = 2;
+
 	public RoomInfo(){
 		this.id_room = null;
 		this.time = -1;

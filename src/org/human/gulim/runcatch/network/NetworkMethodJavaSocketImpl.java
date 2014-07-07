@@ -12,14 +12,23 @@ import java.net.UnknownHostException;
 
 import org.human.gulim.runcatch.bean.Jsonable;
 import org.human.gulim.runcatch.bean.RoomInfo;
-import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.constants.Constants;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 
+	/**
+	 * {
+	 * 		"event": "이벤트이름"
+	 * 		"data": {
+	 * 			
+	 * 		}
+	 * }
+	 */
 	@Override
 	public RoomInfo emitEvent(String event, Jsonable data) throws NetworkMethodException {
 		Socket socket = null;
@@ -32,6 +41,7 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			oOut = new ObjectOutputStream(new BufferedOutputStream(
 					socket.getOutputStream()));
 
+			
 			request = toRequest(event,data);
 			
 			oOut.writeObject(request);
@@ -48,6 +58,9 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			throw new NetworkMethodException(e);
 		} catch (ClassNotFoundException e) {
 			throw new NetworkMethodException(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			throw new NetworkMethodException(e);
 		} finally {
 			freeResources(socket, oIn, oOut);
 		}
@@ -58,15 +71,17 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 	private Object toRequest(String event, Jsonable jsonable) {
 		JSONObject obj = new JSONObject();
 		obj.put("event", event);
-		obj.put("data", jsonable);
+		obj.put("data", jsonable.toJSONObject());
+		
 		
 		return obj.toJSONString();
 	}
 
-	private RoomInfo responseToRoomInfo(Object response) {
+	private RoomInfo responseToRoomInfo(Object response) throws ParseException {
 		RoomInfo roomInfo = null;
 		JSONObject obj = null;
-		obj = (JSONObject) response;
+		JSONParser parser = new JSONParser();
+		obj = (JSONObject) parser.parse(response.toString());
 		
 		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj.get("data"));
 		return roomInfo;
