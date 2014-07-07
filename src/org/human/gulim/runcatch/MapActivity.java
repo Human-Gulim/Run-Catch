@@ -93,11 +93,12 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 				poiItem = new MapPOIItem();
 				poiItem.setItemName(t1List.get(i).getNickname());
 				poiItem.setMapPoint(MapPoint.mapPointWithGeoCoord(t1List.get(i).getLatitude(),t1List.get(i).getLongitude()));
-				poiItem.setMarkerType(MapPOIItem.MarkerType.BluePin);
+				poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+				poiItem.setCustomImageResourceId(R.drawable.burglar);
 				poiItem.setShowAnimationType(MapPOIItem.ShowAnimationType.DropFromHeaven);
 				
 				if ( t1List.get(i).getId().equals(mac))
-					poiItem.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+					poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
 				
 				mapView.addPOIItem(poiItem);
 			}
@@ -107,11 +108,12 @@ public class MapActivity extends Activity implements MapView.OpenAPIKeyAuthentic
 				poiItem = new MapPOIItem();
 				poiItem.setItemName(t2List.get(i).getNickname());
 				poiItem.setMapPoint(MapPoint.mapPointWithGeoCoord(t2List.get(i).getLatitude(),t2List.get(i).getLongitude()));
-				poiItem.setMarkerType(MapPOIItem.MarkerType.RedPin);
+				poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+				poiItem.setCustomImageResourceId(R.drawable.podori);
 				poiItem.setShowAnimationType(MapPOIItem.ShowAnimationType.DropFromHeaven);
 				
 				if ( t2List.get(i).getId().equals(mac))
-					poiItem.setMarkerType(MapPOIItem.MarkerType.YellowPin);
+					poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
 				
 				mapView.addPOIItem(poiItem);
 			}
