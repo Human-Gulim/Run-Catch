@@ -65,11 +65,9 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 		} catch (ClassNotFoundException e) {
 			throw new NetworkMethodException(e);
 		} catch (ParseException e) {
-
 			throw new NetworkMethodException(e);
 		} finally {
 			freeResources(socket, oIn, oOut);
-			
 		}
 		
 		if ( result == null )
