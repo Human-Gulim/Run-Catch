@@ -135,6 +135,8 @@ public class JoinRoomActivity extends Activity {
 						}
 						else
 						{
+							MakeRoomActivity.roomInfo = result;
+							
 							Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 							startActivity(intent);
 						}

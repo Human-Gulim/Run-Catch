@@ -60,6 +60,9 @@
             android:name="org.human.gulim.runcatch.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+
+        <service android:name=".LocationFetchService" >
+        </service>
     </application>
 
 </manifest>
