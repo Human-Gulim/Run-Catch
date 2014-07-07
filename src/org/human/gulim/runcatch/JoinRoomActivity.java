@@ -5,6 +5,9 @@ import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
 import org.human.gulim.runcatch.factory.NetworkMethodFactory;
 import org.human.gulim.runcatch.network.NetworkMethod;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -19,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class JoinRoomActivity extends Activity {
 
@@ -64,8 +68,23 @@ public class JoinRoomActivity extends Activity {
 		
 		// NFC로 보낼 내용을 생성 - content
 		//String content = nickName + "\n" + mac;
-		String content = me.toJSONObject().toJSONString();
 
+		String content = me.toJSONObject().toJSONString();
+		//Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+		/*
+		Log.d("verbose", content);
+		JSONParser parser = new JSONParser();
+		JSONObject obj = null;
+		try {
+			obj = (JSONObject) parser.parse(content);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Log.d("verbose", obj.toJSONString());
+		*/
+		
 		NdefRecord [] records = new NdefRecord[2];
 		
 		records[0] = NdefRecord.createUri(content);

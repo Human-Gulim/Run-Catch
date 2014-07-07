@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.human.gulim.runcatch.bean.RoomInfo;
-// roomInfo
 import org.human.gulim.runcatch.bean.Team;
 import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
@@ -33,13 +32,13 @@ import android.widget.ListView;
 
 public class WaitUserActivity extends Activity {
 	ArrayList<User> list;
-	
-	ArrayAdapter<User> adapter;
+	ArrayList<String> viewList;
+	ArrayAdapter<String> adapter;
 	NfcAdapter mNfcAdapter;
 	IntentFilter[] mNdefExchangeFilters;
 	PendingIntent mNfcPendingIntent;
 	ListView lView;
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +48,10 @@ public class WaitUserActivity extends Activity {
 		lView = (ListView) findViewById (R.id.joinList);
 
 		list = new ArrayList<User>();
-		//rawList = new ArrayList<String[]>();
+		viewList = new ArrayList<String>();
 
-		adapter = new ArrayAdapter<User>(this, 
-				android.R.layout.simple_list_item_1, list);
+		adapter = new ArrayAdapter<String>(this, 
+				android.R.layout.simple_list_item_1, viewList);
 
 		lView.setAdapter(adapter);
 
@@ -103,19 +102,23 @@ public class WaitUserActivity extends Activity {
 						e.printStackTrace();
 					}
 
-					//Log.d("verbose", "decoded text: " + message);f
-					
+					//Log.d("verbose", "decoded text: " + message);
+
 					JSONParser parser = new JSONParser();
 					JSONObject obj = null;
 					try {
-						obj = (JSONObject) parser.parse(message);
+						obj = (JSONObject) parser.parse(message.substring(2));
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					User newUser = User.getUserFromJson(obj);
-					list.add(newUser);
-					
+					if ( newUser == null )
+					{
+						Log.d("verbose", "newUser is null");
+					}
+					memberAdd(newUser);
+
 				}
 			}
 		}
@@ -146,6 +149,7 @@ public class WaitUserActivity extends Activity {
 	public void memberAdd (User data)
 	{
 		list.add(data);
+		viewList.add(data.getNickname() + "(" + data.getId() + ")");
 		adapter.notifyDataSetChanged();
 	}
 
@@ -154,9 +158,9 @@ public class WaitUserActivity extends Activity {
 		// 있는 방에 사람들을 참여시킴
 		Team team1 = new Team();
 		Team team2 = new Team();
-		
+
 		Random r = new Random();
-		
+
 		for (int i=0; i<list.size(); i++)
 		{
 			if ( r.nextInt() % 2 == 0 )
@@ -165,13 +169,13 @@ public class WaitUserActivity extends Activity {
 			}
 			else
 			{
-				
+
 			}
 		}
-		
+
 		MakeRoomActivity.roomInfo.putTeam(0, team1);
 		MakeRoomActivity.roomInfo.putTeam(1, team2);
-		
+
 		class AddMemberTask extends AsyncTask <Void, Void, RoomInfo>
 		{
 
@@ -193,17 +197,17 @@ public class WaitUserActivity extends Activity {
 				}
 				return null;
 			}
-			
+
 		}
-		
+
 		AddMemberTask task = new AddMemberTask ();
 		task.execute();
-		
+
 		// 게임 시작 activity로 전환 후 현재 activity 종료
-		
+
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
-		
+
 		finish();
 	}
 }
