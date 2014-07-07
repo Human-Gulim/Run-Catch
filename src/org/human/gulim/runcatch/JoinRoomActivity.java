@@ -101,7 +101,11 @@ public class JoinRoomActivity extends Activity {
 			@Override
 			public void onNdefPushComplete(NfcEvent event) {
 				// 게임 시작을 기다린다는 내용의 UI로 변경
-					/* Do something */
+				
+				// Android Beam 해제
+				
+				nfcAdapter.setNdefPushMessage(null, thisActivity);
+				
 				// 서버 폴링 시작
 				
 				

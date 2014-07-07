@@ -12,10 +12,11 @@ import java.net.UnknownHostException;
 
 import org.human.gulim.runcatch.bean.Jsonable;
 import org.human.gulim.runcatch.bean.RoomInfo;
-import org.human.gulim.runcatch.bean.User;
 import org.human.gulim.runcatch.constants.Constants;
 import org.human.gulim.runcatch.exception.NetworkMethodException;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class NetworkMethodJavaSocketImpl implements NetworkMethod {
@@ -48,6 +49,9 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 			throw new NetworkMethodException(e);
 		} catch (ClassNotFoundException e) {
 			throw new NetworkMethodException(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			freeResources(socket, oIn, oOut);
 		}
@@ -58,15 +62,20 @@ public class NetworkMethodJavaSocketImpl implements NetworkMethod {
 	private Object toRequest(String event, Jsonable jsonable) {
 		JSONObject obj = new JSONObject();
 		obj.put("event", event);
-		obj.put("data", jsonable);
+		obj.put("data", jsonable.toJSONObject());
 		
+		System.out.println(jsonable.toJSONObject().toJSONString());
+		System.out.println(obj.toJSONString());
 		return obj.toJSONString();
 	}
 
-	private RoomInfo responseToRoomInfo(Object response) {
+	private RoomInfo responseToRoomInfo(Object response) throws ParseException {
+		JSONParser parser = new JSONParser();
 		RoomInfo roomInfo = null;
 		JSONObject obj = null;
-		obj = (JSONObject) response;
+		obj = (JSONObject)parser.parse((String)response);
+		
+		//obj =(JSONObject) response;
 		
 		roomInfo = RoomInfo.getRoomInfoFromJson((JSONObject)obj.get("data"));
 		return roomInfo;
