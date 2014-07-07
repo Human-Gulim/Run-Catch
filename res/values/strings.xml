@@ -12,7 +12,7 @@
     <string name="title_activity_make_room">MakeRoomActivity</string>
     <string name="title_activity_wait_user">WaitUserActivity</string>
     <string name="title_activity_game">GameActivity</string>
-   
+
     <string name="search_hint">Search Location</string>
     
     <string name="N">N</string>
@@ -117,5 +117,6 @@
 	<string name="set_osm_max_object">Maximum POIs per URL</string>
 	<string name="location_not_found">Location not found, make sure you enabled Wifi location or GPS in the settings.</string>
 	<string name="refreshing">Refreshing</string>
+   <string name="title_activity_map">MapActivity</string>
 
 </resources>

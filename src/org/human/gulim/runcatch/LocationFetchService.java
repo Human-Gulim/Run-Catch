@@ -20,8 +20,10 @@ public class LocationFetchService extends Service {
 
 		@Override
 		public void onLocationChanged(Location arg0) {
+			if ( GameActivity.me == null )
+				return;
 			GameActivity.me.onLocationChange(arg0);
-			Log.d("verbose", "got location update on Lat:" + arg0.getLatitude() + "\nLong: " + arg0.getLongitude());
+			//Log.d("verbose", "got location update on Lat:" + arg0.getLatitude() + "\nLong: " + arg0.getLongitude());
 			
 		}
 

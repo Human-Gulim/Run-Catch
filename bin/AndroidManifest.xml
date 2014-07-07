@@ -93,23 +93,23 @@
         
         
         <activity
-            android:name="org.human.gulim.runcatch.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.SetNickNameActivity"
+            android:name=".SetNickNameActivity"
             android:label="@string/title_activity_set_nick_name" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.JoinRoomActivity"
+            android:name=".JoinRoomActivity"
             android:label="@string/title_activity_join_room" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.CommunicationsEnableActivity"
+            android:name=".CommunicationsEnableActivity"
             android:label="@string/title_activity_communications_enable" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.SplashActivity"
+            android:name=".SplashActivity"
             android:label="Run and Catch" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -118,20 +118,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.MakeRoomActivity"
+            android:name=".MakeRoomActivity"
             android:label="@string/title_activity_make_room" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.WaitUserActivity"
+            android:name=".WaitUserActivity"
             android:label="@string/title_activity_wait_user" >
         </activity>
         <activity
-            android:name="org.human.gulim.runcatch.GameActivity"
+            android:name=".GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
 
         <service android:name=".LocationFetchService" >
         </service>
+
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
     </application>
 
 </manifest>
