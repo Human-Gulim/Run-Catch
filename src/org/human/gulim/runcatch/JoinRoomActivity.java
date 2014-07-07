@@ -11,6 +11,7 @@ import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -114,6 +115,7 @@ public class JoinRoomActivity extends Activity {
 				{
 					@Override
 					protected void onPostExecute(RoomInfo result) {
+						super.onPostExecute(result);
 						// 만약 돌아온 응답이 null 이라면, 5초 후 다시 시도
 						if ( result == null )
 						{
@@ -131,7 +133,12 @@ public class JoinRoomActivity extends Activity {
 								
 							}, 5000);
 						}
-						super.onPostExecute(result);
+						else
+						{
+							Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+							startActivity(intent);
+						}
+						
 					}
 
 					@Override

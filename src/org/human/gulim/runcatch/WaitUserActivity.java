@@ -16,8 +16,10 @@ import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -25,6 +27,7 @@ import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -72,6 +75,18 @@ public class WaitUserActivity extends Activity {
 			e.printStackTrace();
 		}
 		mNdefExchangeFilters = new IntentFilter[] { ndefDetected };
+		
+		User me = new User();
+		BluetoothAdapter BTAdapter = BluetoothAdapter.getDefaultAdapter();
+		String mac = BTAdapter.getAddress();
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		final String nickName = pref.getString("nickName", "");
+		
+		me.setId(mac);
+		me.setId_room(mac);
+		me.setNickname(nickName);
+		
+		memberAdd(me);
 
 	}
 
@@ -159,6 +174,9 @@ public class WaitUserActivity extends Activity {
 		Team team1 = new Team(); // 경찰
 		Team team2 = new Team(); // 도둑
 
+		team1.setId_team(0);
+		team2.setId_team(1);
+		
 		Random r = new Random();
 		boolean okToStart = false;
 
@@ -168,18 +186,24 @@ public class WaitUserActivity extends Activity {
 			{
 				if ( r.nextInt() % 2 == 0 )
 				{
+					list.get(i).setId_team(0);
 					team1.put(list.get(i).getId(), list.get(i));
 				}
 				else
 				{
+					list.get(i).setId_team(1);
 					team2.put(list.get(i).getId(), list.get(i));
 				}
 			}
-			if ( team1.getCount() > team2.getCount() || ((team1.getCount() != 0) && (team2.getCount() != 0) ) )
+			if ( !(team1.getCount() < team2.getCount()) || ((team1.getCount() == 0) || (team2.getCount() == 0) ) )
 			{
 				// retry
 				team1 = new Team();
 				team2 = new Team();
+				
+				team1.setId_team(0);
+				team2.setId_team(1);
+				
 			}
 			else
 			{
